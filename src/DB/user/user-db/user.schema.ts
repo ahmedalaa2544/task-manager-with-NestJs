@@ -1,4 +1,4 @@
-import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { Prop, Schema, SchemaFactory, MongooseModule } from '@nestjs/mongoose';
 import { Document } from 'mongoose';
 
 @Schema({ timestamps: true })
@@ -19,4 +19,8 @@ export class User extends Document {
   gender: string;
 }
 
-export const UserSchema = SchemaFactory.createForClass(User);
+export const userSchema = SchemaFactory.createForClass(User);
+// // Module
+// export const UserDbModule = MongooseModule.forFeature([
+//   { name: User.name, schema: UserSchema },
+// ]);
