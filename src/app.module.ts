@@ -27,6 +27,6 @@ import { MessageDbModule } from './db/message/message-db/message-db.module';
     MessageDbModule,
   ],
   controllers: [AppController],
-  providers: [AppService, MessageDbService],
+  providers: [AppService],
 })
 export class AppModule {}

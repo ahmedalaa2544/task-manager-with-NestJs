@@ -15,6 +15,3 @@ export class Message extends Document {
 
 export const messageSchema = SchemaFactory.createForClass(Message);
 // // Module
-// export const UserDbModule = MongooseModule.forFeature([
-//   { name: User.name, schema: UserSchema },
-// ]);

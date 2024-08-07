@@ -8,12 +8,14 @@ import {
 } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { UserDbService } from '../../DB/user/user-db/user-db.service';
+import { ConfigService } from '@nestjs/config';
 
 @Injectable()
 export class AuthenticationGuard implements CanActivate {
   constructor(
     private readonly _jwtService: JwtService,
     private readonly _userDbService: UserDbService,
+    private readonly configService: ConfigService,
   ) {}
 
   async canActivate(context: ExecutionContext): Promise<boolean> {
@@ -25,12 +27,12 @@ export class AuthenticationGuard implements CanActivate {
       throw new UnauthorizedException();
 
     const access_token = authHeader.split(' ')[1];
-
     try {
       const payload = this._jwtService.verify(access_token, {
-        secret: 'secretKey',
+        secret: this.configService.get<string>('JWT_SECRET'),
       });
 
+      request.id = payload.id;
       const user = await this._userDbService.findById(payload.id);
 
       if (!user) throw new NotFoundException('User not found!');
