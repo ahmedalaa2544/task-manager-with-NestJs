@@ -8,6 +8,10 @@ import { UserDbModule } from './db/user/user-db/user-db.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { MessageDbService } from './db/message/message-db/message-db.service';
 import { MessageDbModule } from './db/message/message-db/message-db.module';
+import { PostModule } from './post/post.module';
+import { PostDbModule } from './db/post/post-db/post-db.module';
+import { UploadModule } from './upload/upload.module';
+import { AzureModule } from './azure/azure.module';
 
 @Module({
   imports: [
@@ -25,6 +29,10 @@ import { MessageDbModule } from './db/message/message-db/message-db.module';
     }),
     UserDbModule,
     MessageDbModule,
+    PostModule,
+    PostDbModule,
+    UploadModule,
+    AzureModule,
   ],
   controllers: [AppController],
   providers: [AppService],

@@ -2,6 +2,7 @@ import {
   Body,
   Controller,
   Get,
+  Param,
   Post,
   Req,
   UseGuards,
@@ -25,9 +26,26 @@ export class UserController {
     return this.userService.login(body);
   }
 
-  @Post('sendMessage')
+  @Post('sendMessage/:toId')
   @UseGuards(AuthenticationGuard)
-  sendMessage(@Req() req: Request, @Body() body: any) {
-    return this.userService.sendMessage(req as Request & { id: string }, body);
+  sendMessage(
+    @Param('toId') toId: string,
+    @Req() req: Request,
+    @Body() body: any,
+  ) {
+    return this.userService.sendMessage(
+      req as Request & { id: string },
+      toId,
+      body,
+    );
+  }
+
+  @Get('getChatHistoryForUser/:userId')
+  @UseGuards(AuthenticationGuard)
+  getChatHistoryForUser(@Param('userId') userId: string, @Req() req: Request) {
+    return this.userService.getMessages(
+      req as Request & { id: string },
+      userId,
+    );
   }
 }

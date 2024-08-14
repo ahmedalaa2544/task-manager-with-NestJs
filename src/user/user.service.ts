@@ -62,12 +62,24 @@ export class UserService {
 
   async sendMessage<T extends { id: string }>(
     req: T,
+    toId: string,
     body: any,
   ): Promise<Message> {
     const message = await this._messageDbService.create({
       from: req.id,
+      to: toId,
       ...body,
     });
     return message;
+  }
+  async getMessages<T extends { id: string }>(
+    req: T,
+    toId: string,
+  ): Promise<Message[]> {
+    const messages = await this._messageDbService.find({
+      from: req.id,
+      to: toId,
+    });
+    return messages;
   }
 }
