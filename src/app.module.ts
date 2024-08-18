@@ -12,7 +12,8 @@ import { PostModule } from './post/post.module';
 import { PostDbModule } from './db/post/post-db/post-db.module';
 import { UploadModule } from './upload/upload.module';
 import { AzureModule } from './azure/azure.module';
-
+import { RedisModule } from './redis/redis.module';
+//
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -31,8 +32,7 @@ import { AzureModule } from './azure/azure.module';
     MessageDbModule,
     PostModule,
     PostDbModule,
-    UploadModule,
-    AzureModule,
+    RedisModule,
   ],
   controllers: [AppController],
   providers: [AppService],

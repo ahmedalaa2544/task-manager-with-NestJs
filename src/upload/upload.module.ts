@@ -5,6 +5,6 @@ import { CommonUploadService } from './common-upload.service';
 @Module({
   imports: [AzureModule],
   providers: [UploadService, CommonUploadService],
-  exports: [UploadService],
+  exports: [UploadService, CommonUploadService],
 })
 export class UploadModule {}

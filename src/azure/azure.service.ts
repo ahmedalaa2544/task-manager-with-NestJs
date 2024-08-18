@@ -15,7 +15,7 @@ type SASUrlResult =
       fileUrl: string;
     }
   | string;
-
+import * as fs from 'fs/promises';
 @Injectable()
 export class AzureService {
   constructor(private readonly configService: ConfigService) {}
@@ -111,5 +111,20 @@ export class AzureService {
   async createBlockBlobClient(sasTokenUrl: string) {
     const blockBlobClient = new BlockBlobClient(sasTokenUrl);
     return blockBlobClient;
+  }
+  async uploadData(
+    filePath: string,
+    blockBlobClient: BlockBlobClient,
+  ): Promise<any> {
+    try {
+      const data = await fs.readFile(filePath);
+      await blockBlobClient.uploadData(data);
+
+      // Call next function here if uploadData succeeds
+      return { success: true };
+    } catch (err) {
+      // Handle error
+      throw new Error(`Failed to upload data: ${err.message}`);
+    }
   }
 }

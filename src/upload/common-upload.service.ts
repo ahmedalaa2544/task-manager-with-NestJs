@@ -8,20 +8,24 @@ export class CommonUploadService {
 
   async upload(
     inputFilePath: string,
-    blobName,
-    type: 'video' | 'file',
-    fileExtension,
-  ): Promise<any> {
-    return new Promise(async (resolve, reject) => {
-      // Initialize the temp module for temporary directory management
-      temp.track();
+    blobName: string,
+    // type: 'video' | 'file',
+    // fileExtension,
+  ) {
+    // // Initialize the temp module for temporary directory management
+    // temp.track();
 
-      // Create a temporary directory
-      temp.mkdir('upload', async (err, tempDirPath) => {});
-      // Generate a Shared Access Signature (SAS) URL for secure blob access
-      const { accountSasTokenUrl, fileUrl } =
-        await this.azureService.generateSASUrl(blobName, 'racwd', 100);
-    });
+    // // Create a temporary directory
+    // temp.mkdir('upload', async (err, tempDirPath) => {});
+    // Generate a Shared Access Signature (SAS) URL for secure blob access
+    const { accountSasTokenUrl, fileUrl } =
+      await this.azureService.generateSASUrl(blobName, 'racwd', 100);
+    // Create a BlockBlobClient using the SAS URL
+    const blockBlobClient =
+      await this.azureService.createBlockBlobClient(accountSasTokenUrl);
+    // Read the compressed file and upload its data to Azure Blob Storage
+    await this.azureService.uploadData(inputFilePath, blockBlobClient);
+    return fileUrl;
   }
 }
 // // Common logic here
