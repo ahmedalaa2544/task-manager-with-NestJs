@@ -4,7 +4,7 @@ import { Project } from 'src/db/project/project-db/project.schema';
 @Schema({ timestamps: true })
 export class Task extends Document {
   @Prop({ required: true, lowercase: true })
-  title: string;
+  name: string;
   @Prop({ type: Types.ObjectId, ref: Project.name, required: true })
   project: Types.ObjectId;
   @Prop({ enum: ['admin', 'manager', 'user'], default: 'user' })

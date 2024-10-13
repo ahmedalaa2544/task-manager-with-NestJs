@@ -4,7 +4,7 @@ import { User } from 'src/DB/user/user-db/user.schema';
 @Schema({ timestamps: true })
 export class Project extends Document {
   @Prop({ required: true, lowercase: true })
-  title: string;
+  name: string;
   @Prop({ type: Types.ObjectId, ref: User.name, required: true })
   manager: Types.ObjectId;
 }

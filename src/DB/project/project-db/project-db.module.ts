@@ -7,5 +7,6 @@ import { Project, projectSchema } from './project.schema';
     MongooseModule.forFeature([{ name: Project.name, schema: projectSchema }]),
   ],
   providers: [ProjectDbService],
+  exports: [ProjectDbService],
 })
 export class ProjectDbModule {}
