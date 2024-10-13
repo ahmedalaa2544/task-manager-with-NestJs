@@ -6,13 +6,14 @@ import { ChatModule } from './chat/chat.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { UserDbModule } from './db/user/user-db/user-db.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { MessageDbService } from './db/message/message-db/message-db.service';
-import { MessageDbModule } from './db/message/message-db/message-db.module';
-import { PostModule } from './post/post.module';
-import { PostDbModule } from './db/post/post-db/post-db.module';
-import { UploadModule } from './upload/upload.module';
 import { AzureModule } from './azure/azure.module';
-import { RedisModule } from './redis/redis.module';
+import { KeysModule } from './keys/keys.module';
+import { ProjectDbModule } from './db/project/project-db/project-db.module';
+import { TastDbService } from './db/task/tast-db/tast-db.service';
+import { TastDbModule } from './db/task/tast-db/tast-db.module';
+import { TassDbModule } from './db/task/tass-db/tass-db.module';
+import { TaskDbService } from './db/task/task-db/task-db.service';
+import { TaskDbModule } from './db/task/task-db/task-db.module';
 //
 @Module({
   imports: [
@@ -29,12 +30,13 @@ import { RedisModule } from './redis/redis.module';
       inject: [ConfigService],
     }),
     UserDbModule,
-    MessageDbModule,
-    PostModule,
-    PostDbModule,
-    RedisModule,
+    KeysModule,
+    ProjectDbModule,
+    TastDbModule,
+    TassDbModule,
+    TaskDbModule,
   ],
   controllers: [AppController],
-  providers: [AppService],
+  providers: [AppService, TastDbService, TaskDbService],
 })
 export class AppModule {}

@@ -25,27 +25,4 @@ export class UserController {
   login(@Body() body: any) {
     return this.userService.login(body);
   }
-
-  @Post('sendMessage/:toId')
-  @UseGuards(AuthenticationGuard)
-  sendMessage(
-    @Param('toId') toId: string,
-    @Req() req: Request,
-    @Body() body: any,
-  ) {
-    return this.userService.sendMessage(
-      req as Request & { id: string },
-      toId,
-      body,
-    );
-  }
-
-  @Get('getChatHistoryForUser/:userId')
-  @UseGuards(AuthenticationGuard)
-  getChatHistoryForUser(@Param('userId') userId: string, @Req() req: Request) {
-    return this.userService.getMessages(
-      req as Request & { id: string },
-      userId,
-    );
-  }
 }

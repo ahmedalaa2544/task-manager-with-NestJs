@@ -6,12 +6,9 @@ import {
   UnprocessableEntityException,
   Req,
 } from '@nestjs/common';
-// import { InjectModel } from '@nestjs/mongoose';
-// import { Model } from 'mongoose';
+
 import { User } from '../DB/user/user-db/user.schema';
 import { UserDbService } from '../DB/user/user-db/user-db.service';
-import { Message } from '../DB/message/message-db/message.schema';
-import { MessageDbService } from '../DB/message/message-db/message-db.service';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -20,7 +17,6 @@ import { ConfigService } from '@nestjs/config';
 export class UserService {
   constructor(
     private readonly _userDbService: UserDbService,
-    private readonly _messageDbService: MessageDbService,
     private jwtService: JwtService,
     private readonly configService: ConfigService,
   ) {}
@@ -37,6 +33,7 @@ export class UserService {
       ...body,
       password: hashPassword,
     });
+
     return { ...body, password: undefined };
   }
 
@@ -58,28 +55,5 @@ export class UserService {
     });
 
     return { access_token };
-  }
-
-  async sendMessage<T extends { id: string }>(
-    req: T,
-    toId: string,
-    body: any,
-  ): Promise<Message> {
-    const message = await this._messageDbService.create({
-      from: req.id,
-      to: toId,
-      ...body,
-    });
-    return message;
-  }
-  async getMessages<T extends { id: string }>(
-    req: T,
-    toId: string,
-  ): Promise<Message[]> {
-    const messages = await this._messageDbService.find({
-      from: req.id,
-      to: toId,
-    });
-    return messages;
   }
 }
